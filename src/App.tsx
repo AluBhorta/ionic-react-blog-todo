@@ -9,7 +9,7 @@ import {
   IonTabs
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { bookOutline, list, information, informationCircle } from "ionicons/icons";
+import { bookOutline, list, informationCircle } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -74,11 +74,7 @@ const App: React.FC = () => (
             component={() => <Tab2 todos={MyAppState.todos} />}
             exact={true}
           />
-          <Route
-            path="/about"
-            component={About}
-            exact={true}
-          />
+          <Route path="/about" component={About} exact={true} />
           <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
         </IonRouterOutlet>
 
@@ -90,7 +86,7 @@ const App: React.FC = () => (
           <IonTabButton tab="tab2" href="/tab2">
             <IonIcon icon={list} />
           </IonTabButton>
-          
+
           <IonTabButton tab="tab3" href="/about">
             <IonIcon icon={informationCircle} />
           </IonTabButton>
