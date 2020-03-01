@@ -3,16 +3,13 @@ import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
   IonIcon,
-  IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { ellipse, bookOutline, settings, list } from "ionicons/icons";
-import Tab1 from "./pages/Tab1";
-import Tab2 from "./pages/Tab2";
+import { bookOutline, list, information, informationCircle } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -32,7 +29,16 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { Article } from "./models/Models";
+
+/* pages */
+import Tab1 from "./pages/Tab1";
+import Tab2 from "./pages/Tab2";
+import { AddArticle } from "./pages/AddArticle";
+import { ArticleDetail } from "./pages/ArticleDetail";
+
+/* state */
+import { MyAppState } from "./State";
+import { About } from "./pages/About";
 
 const App: React.FC = () => (
   <IonApp>
@@ -41,21 +47,52 @@ const App: React.FC = () => (
         <IonRouterOutlet>
           <Route
             path="/tab1"
-            component={() => <Tab1 articles={articles} />}
+            component={() => <Tab1 articles={MyAppState.articles} />}
             exact={true}
           />
-          <Route path="/tab2" component={Tab2} exact={true} />
+          <Route
+            path="/add-article"
+            component={() => <AddArticle />}
+            exact={true}
+          />
+          <Route
+            path="/article-detail/:id"
+            component={(props: any) => {
+              const _id = +props.match.params.id;
+              const article = MyAppState.articles.find(a => a.id === _id);
+
+              if (!article) {
+                throw Error(`Error! No article found with id: ${_id}!`);
+              }
+
+              return <ArticleDetail article={article} />;
+            }}
+            exact={true}
+          />
+          <Route
+            path="/tab2"
+            component={() => <Tab2 todos={MyAppState.todos} />}
+            exact={true}
+          />
+          <Route
+            path="/about"
+            component={About}
+            exact={true}
+          />
           <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom" color="tertiary">
           <IonTabButton tab="tab1" href="/tab1">
             <IonIcon icon={bookOutline} />
-            {/* <IonLabel>Articles</IonLabel> */}
           </IonTabButton>
 
           <IonTabButton tab="tab2" href="/tab2">
             <IonIcon icon={list} />
+          </IonTabButton>
+          
+          <IonTabButton tab="tab3" href="/about">
+            <IonIcon icon={informationCircle} />
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
@@ -64,32 +101,3 @@ const App: React.FC = () => (
 );
 
 export default App;
-
-const articles: Article[] = [
-  {
-    title: "candid photo 101",
-    subtitle: "you think this is a game?",
-    body:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit sunt mollitia nemo cum nesciunt culpa, quos eligendi, non ipsum in quo facilis inventore nihil cumque doloribus molestiae sint! In, doloremque!",
-    imgUrl: `https://cnet1.cbsistatic.com/img/s2nbDz9k8s8kqY3sEycxg_KGXj0=/1092x0/2019/12/02/8b898eba-189c-4fe9-b6f6-c9dfe0dd81bf/orangecat.jpg`,
-    date: new Date(2019, 9, 11)
-  },
-  {
-    title: "Big boi",
-    subtitle: "kome at me vro",
-    body:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit sunt mollitia nemo ",
-    imgUrl:
-      "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/reference_guide/cats_and_excessive_meowing_ref_guide/1800x1200_cats_and_excessive_meowing_ref_guide.jpg",
-    date: new Date(2015, 4, 1)
-  },
-  {
-    title: "Rawr!",
-    subtitle: "the nauty kitty",
-    body:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit sunt mollitia nemo cum nesciunt culpa, quos eligendi, non ipsum in quo facilis inventore nihil cumque doloribus molestiae sint! In, doloremque! \n quo facilis inventore nihil cumque doloribus molestiae sint! In, doloremque!",
-    imgUrl:
-      "https://static.techspot.com/images2/news/bigimage/2019/12/2019-12-23-image.jpg",
-    date: new Date(2012, 2, 31)
-  }
-];

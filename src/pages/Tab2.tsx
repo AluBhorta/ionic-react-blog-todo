@@ -10,12 +10,24 @@ import {
   IonCheckbox,
   IonLabel,
   IonNote,
-  IonBadge
+  IonFab,
+  IonFabButton,
+  IonIcon
 } from "@ionic/react";
 
 import "./Tab2.css";
+import { Todo } from "../models/Models";
+import { add } from "ionicons/icons";
 
-const Tab2: React.FC = () => {
+const Tab2: React.FC<{ todos: Todo[] }> = ({ todos }) => {
+  const todoItems = todos.map(t => (
+    <IonItem key={t.id}>
+      <IonCheckbox slot="start" checked={t.completed} />
+      <IonLabel>
+        <IonNote>{t.text}</IonNote>
+      </IonLabel>
+    </IonItem>
+  ));
   return (
     <IonPage>
       <IonHeader>
@@ -24,36 +36,12 @@ const Tab2: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonList>
-          <IonItem>
-            <IonCheckbox slot="start" />
-            <IonLabel>
-              <h1>Add Article Page</h1>
-              <IonNote>Add `Add new Article Page`</IonNote>
-            </IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonCheckbox slot="start" />
-            <IonLabel>
-              <h1>Add Article Detail Page</h1>
-              <IonNote>Add Article detail page with all data</IonNote>
-            </IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonCheckbox slot="start" />
-            <IonLabel>
-              <h1>Add Article Buttons</h1>
-              <IonNote>Add Delete {"&"} Edit button in Articles page</IonNote>
-            </IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonCheckbox slot="start" />
-            <IonLabel>
-              <h1>Add About Page</h1>
-              <IonNote>Page describing project and link to alubhorta</IonNote>
-            </IonLabel>
-          </IonItem>
-        </IonList>
+        <IonList>{todoItems}</IonList>
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton color="tertiary">
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

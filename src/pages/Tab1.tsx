@@ -14,8 +14,7 @@ import {
   IonImg,
   IonCardSubtitle,
   IonCardTitle,
-  IonBadge,
-  IonItem
+  IonBadge
 } from "@ionic/react";
 import "./Tab1.css";
 import { add } from "ionicons/icons";
@@ -23,19 +22,18 @@ import { Article } from "../models/Models";
 
 const Tab1: React.FC<{ articles: Article[] }> = ({ articles }) => {
   const articleCards = articles.map((article, i) => (
-    <IonCard key={i}>
+    <IonCard key={i} button={true} href={`/article-detail/${article.id}`}>
       <IonImg src={article.imgUrl}></IonImg>
 
       <IonCardHeader>
         <IonCardTitle>{article.title}</IonCardTitle>
-        <IonCardSubtitle>Date: {article.date.toDateString()}</IonCardSubtitle>
+        <IonCardSubtitle>{article.subtitle}</IonCardSubtitle>
       </IonCardHeader>
 
       <IonCardContent>
         <IonBadge color="success" slot="start">
           {article.date.getFullYear()}
         </IonBadge>
-        <p>{article.subtitle}</p>
       </IonCardContent>
     </IonCard>
   ));
@@ -52,7 +50,7 @@ const Tab1: React.FC<{ articles: Article[] }> = ({ articles }) => {
         {articleCards}
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton color="tertiary">
+          <IonFabButton color="tertiary" href="/add-article">
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>
