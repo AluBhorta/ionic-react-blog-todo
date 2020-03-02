@@ -1,0 +1,9 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "react-ionic-blog",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {},
+  "linuxAndroidStudioPath": "/home/alu/software/android-studio/bin/studio.sh"
+}
