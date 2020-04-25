@@ -2,6 +2,7 @@
   "name": "react-ionic-blog",
   "version": "0.0.1",
   "private": true,
+  "homepage": "https://alubhorta.github.io/ionic-react-blog-todo/",
   "dependencies": {
     "@capacitor/android": "^1.5.0",
     "@capacitor/core": "1.5.0",
@@ -28,7 +29,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,6 +51,7 @@
   "devDependencies": {
     "@capacitor/cli": "1.5.0",
     "cordova-res": "^0.9.0",
+    "gh-pages": "^2.2.0",
     "native-run": "^0.3.0"
   },
   "description": "An Ionic project"
